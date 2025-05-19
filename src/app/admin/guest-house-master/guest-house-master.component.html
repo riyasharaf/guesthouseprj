@@ -1,0 +1,241 @@
+<div class="guest-house-master-container">
+  <div class="header">
+    <h2>Guest House Master</h2>
+  </div>
+
+  <!-- Stepper Form -->
+  <mat-stepper #stepper [linear]="isLinear">
+    <!-- Guest House Details Step -->
+    <mat-step [stepControl]="guestHouseDetailsForm">
+      <form [formGroup]="guestHouseDetailsForm">
+        <ng-template matStepLabel>Guest House Details</ng-template>
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Guest House Name</mat-label>
+            <input matInput formControlName="guestHouseName" required>
+            <mat-error *ngIf="guestHouseDetailsForm.get('guestHouseName')?.hasError('required')">
+              Guest house name is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address" required>
+            <mat-error *ngIf="guestHouseDetailsForm.get('address')?.hasError('required')">
+              Address is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city" required>
+            <mat-error *ngIf="guestHouseDetailsForm.get('city')?.hasError('required')">
+              City is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>State</mat-label>
+            <input matInput formControlName="state" required>
+            <mat-error *ngIf="guestHouseDetailsForm.get('state')?.hasError('required')">
+              State is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Pin Code</mat-label>
+            <input matInput formControlName="pincode" required pattern="[0-9]{6}">
+            <mat-error *ngIf="guestHouseDetailsForm.get('pincode')?.hasError('required')">
+              Pin code is required
+            </mat-error>
+            <mat-error *ngIf="guestHouseDetailsForm.get('pincode')?.hasError('pattern')">
+              Pin code must be 6 digits
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-slide-toggle formControlName="isActive">Active</mat-slide-toggle>
+
+        <div class="button-row">
+          <button mat-button matStepperNext [disabled]="!guestHouseDetailsForm.valid">Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <!-- Room Details Step -->
+    <mat-step [stepControl]="roomDetailsForm">
+      <form [formGroup]="roomDetailsForm">
+        <ng-template matStepLabel>Room/Existing Guest House</ng-template>
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Total Rooms</mat-label>
+            <input matInput type="number" formControlName="totalRooms" required min="1">
+            <mat-error *ngIf="roomDetailsForm.get('totalRooms')?.hasError('required')">
+              Total rooms is required
+            </mat-error>
+            <mat-error *ngIf="roomDetailsForm.get('totalRooms')?.hasError('min')">
+              Must be at least 1 room
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Select Rooms</mat-label>
+            <mat-select formControlName="selectedRooms" multiple required (selectionChange)="onRoomSelectionChange()">
+              <mat-option *ngFor="let room of availableRooms" [value]="room">
+                Room {{room}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="roomDetailsForm.get('selectedRooms')?.hasError('required')">
+              Please select at least one room
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Room Type</mat-label>
+          <mat-select formControlName="roomType" required>
+            <mat-option value="single">Single</mat-option>
+            <mat-option value="double">Double</mat-option>
+            <mat-option value="suite">Suite</mat-option>
+          </mat-select>
+          <mat-error *ngIf="roomDetailsForm.get('roomType')?.hasError('required')">
+            Room type is required
+          </mat-error>
+        </mat-form-field>
+
+        <div class="button-row">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext [disabled]="!roomDetailsForm.valid">Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <!-- Bed Details Step -->
+    <mat-step [stepControl]="bedDetailsForm">
+      <form [formGroup]="bedDetailsForm">
+        <ng-template matStepLabel>Bed</ng-template>
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Beds per Room</mat-label>
+            <input matInput type="number" formControlName="bedsPerRoom" required min="1">
+            <mat-error *ngIf="bedDetailsForm.get('bedsPerRoom')?.hasError('required')">
+              Beds per room is required
+            </mat-error>
+            <mat-error *ngIf="bedDetailsForm.get('bedsPerRoom')?.hasError('min')">
+              Must be at least 1 bed per room
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Select Beds</mat-label>
+            <mat-select formControlName="selectedBeds" multiple required>
+              <mat-optgroup *ngFor="let room of roomDetailsForm.get('selectedRooms')?.value" [label]="'Room ' + room">
+                <mat-option *ngFor="let bed of availableBeds[room]" [value]="room + '-' + bed">
+                  Bed {{bed}}
+                </mat-option>
+              </mat-optgroup>
+            </mat-select>
+            <mat-error *ngIf="bedDetailsForm.get('selectedBeds')?.hasError('required')">
+              Please select at least one bed
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Bed Type</mat-label>
+          <mat-select formControlName="bedType" required>
+            <mat-option value="single">Single</mat-option>
+            <mat-option value="double">Double</mat-option>
+            <mat-option value="queen">Queen</mat-option>
+            <mat-option value="king">King</mat-option>
+          </mat-select>
+          <mat-error *ngIf="bedDetailsForm.get('bedType')?.hasError('required')">
+            Bed type is required
+          </mat-error>
+        </mat-form-field>
+
+        <div class="button-row">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!bedDetailsForm.valid">
+            Submit
+          </button>
+          <button mat-button (click)="resetForms()">Reset</button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-stepper>
+
+  <!-- Guest Houses Table -->
+  <div class="table-container">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)" [(ngModel)]="searchKey" placeholder="Search guest houses...">
+      <button mat-icon-button matSuffix *ngIf="searchKey" (click)="searchKey=''; applyFilter('')">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <!-- Sr No Column -->
+      <ng-container matColumnDef="srNo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Sr No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.srNo}} </td>
+      </ng-container>
+
+      <!-- Guest House Name Column -->
+      <ng-container matColumnDef="guestHouseName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Guest House Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.guestHouseName}} </td>
+      </ng-container>
+
+      <!-- Location Column -->
+      <ng-container matColumnDef="location">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Location </th>
+        <td mat-cell *matCellDef="let element"> {{element.location}} </td>
+      </ng-container>
+
+      <!-- Room Column -->
+      <ng-container matColumnDef="room">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Room </th>
+        <td mat-cell *matCellDef="let element"> {{element.room}} </td>
+      </ng-container>
+
+      <!-- Bed Column -->
+      <ng-container matColumnDef="bed">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Bed </th>
+        <td mat-cell *matCellDef="let element"> {{element.bed}} </td>
+      </ng-container>
+
+      <!-- IsActive Column -->
+      <ng-container matColumnDef="isActive">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let element">
+          <div class="status-chip">
+            <mat-chip-set>
+              <mat-chip [class.active-chip]="element.isActive" [class.inactive-chip]="!element.isActive">
+                {{element.isActive ? 'Active' : 'Inactive'}}
+              </mat-chip>
+            </mat-chip-set>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button color="warn" (click)="deleteGuestHouse(element.srNo)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of guest houses"></mat-paginator>
+  </div>
+</div> 

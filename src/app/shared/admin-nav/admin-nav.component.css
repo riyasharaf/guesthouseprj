@@ -1,0 +1,55 @@
+.admin-nav {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  width: 250px;
+}
+
+.nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.nav-header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-links a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  color: #666;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.nav-links a:hover {
+  background-color: #f5f5f5;
+  color: #673ab7;
+}
+
+.nav-links a.active-link {
+  background-color: #ede7f6;
+  color: #673ab7;
+}
+
+.nav-links mat-icon {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+}

@@ -1,0 +1,18 @@
+<nav class="user-nav">
+  <div class="nav-header">
+    <h2>User Panel</h2>
+    <button mat-icon-button (click)="goToHome()">
+      <mat-icon>home</mat-icon>
+    </button>
+  </div>
+  <div class="nav-links">
+    <a routerLink="/booking" routerLinkActive="active-link">
+      <mat-icon>hotel</mat-icon>
+      Book Room
+    </a>
+    <a routerLink="/my-bookings" routerLinkActive="active-link">
+      <mat-icon>list_alt</mat-icon>
+      My Bookings
+    </a>
+  </div>
+</nav>

@@ -1,0 +1,78 @@
+<div class="booking-wrapper">
+  <h2 class="form-title">Guest House Booking</h2>
+
+  <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" class="booking-form">
+
+    <div class="form-grid">
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Full Name</mat-label>
+        <input matInput formControlName="fullName" />
+      </mat-form-field>
+
+ 
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" />
+      </mat-form-field>
+
+      
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Check-in Date</mat-label>
+        <input matInput [matDatepicker]="checkinPicker" formControlName="checkIn" />
+        <mat-datepicker-toggle matSuffix [for]="checkinPicker"></mat-datepicker-toggle>
+        <mat-datepicker #checkinPicker></mat-datepicker>
+      </mat-form-field>
+
+      
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Check-out Date</mat-label>
+        <input matInput [matDatepicker]="checkoutPicker" formControlName="checkOut" />
+        <mat-datepicker-toggle matSuffix [for]="checkoutPicker"></mat-datepicker-toggle>
+        <mat-datepicker #checkoutPicker></mat-datepicker>
+      </mat-form-field>
+
+      
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Guest House</mat-label>
+        <mat-select formControlName="guestHouse">
+          <mat-option *ngFor="let gh of guestHouses" [value]="gh">{{ gh }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+     
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Location</mat-label>
+        <mat-select formControlName="location">
+          <mat-option *ngFor="let loc of locations" [value]="loc">{{ loc }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+   
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Room No</mat-label>
+        <mat-select formControlName="roomNo">
+          <mat-option *ngFor="let room of rooms" [value]="room">{{ room }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Bed No</mat-label>
+        <mat-select formControlName="bedNo">
+          <mat-option *ngFor="let bed of beds" [value]="bed">{{ bed }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+  
+    <mat-form-field appearance="outline" class="form-field full-width">
+      <mat-label>Purpose</mat-label>
+      <textarea matInput rows="3" formControlName="purpose"></textarea>
+    </mat-form-field>
+
+    <div class="submit-button">
+      <button mat-raised-button color="primary" type="submit">Book Now</button>
+    </div>
+  </form>
+</div>
