@@ -1,0 +1,35 @@
+<div class="admin-nav">
+  <div class="nav-header">
+    <h2>Admin Panel</h2>
+  </div>
+  
+  <nav class="nav-links">
+    <a routerLink="/admin/dashboard" routerLinkActive="active-link">
+      <mat-icon>dashboard</mat-icon>
+      Dashboard
+    </a>
+    <a routerLink="/admin/reservation-list" routerLinkActive="active-link">
+      <mat-icon>list</mat-icon>
+      Reservation List
+    </a>
+    <a routerLink="/admin/pending-request" routerLinkActive="active-link">
+      <mat-icon>pending_actions</mat-icon>
+      Pending Requests
+    </a>
+    <a routerLink="/admin/guest-house-master" routerLinkActive="active-link">
+      <mat-icon>business</mat-icon>
+      Guest House Master
+    </a>
+    <a routerLink="/admin/report" routerLinkActive="active-link">
+      <mat-icon>assessment</mat-icon>
+      Reports
+    </a>
+  </nav>
+
+  <div class="nav-footer">
+    <button mat-button color="warn" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Logout
+    </button>
+  </div>
+</div> 

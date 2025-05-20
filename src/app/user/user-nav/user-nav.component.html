@@ -1,0 +1,23 @@
+<div class="user-nav">
+  <div class="nav-header">
+    <h2>User Panel</h2>
+  </div>
+  
+  <nav class="nav-links">
+    <a routerLink="/user/bookings" routerLinkActive="active-link">
+      <mat-icon>event</mat-icon>
+      Book Guest House
+    </a>
+    <a routerLink="/user/my-bookings" routerLinkActive="active-link">
+      <mat-icon>book</mat-icon>
+      My Bookings
+    </a>
+  </nav>
+
+  <div class="nav-footer">
+    <button mat-button color="warn" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Logout
+    </button>
+  </div>
+</div> 

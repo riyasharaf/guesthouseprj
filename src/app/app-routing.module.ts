@@ -1,31 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { BookingPageComponent } from './user/booking-page/booking-page.component';
-import { MybookingsComponent } from './user/mybookings/mybookings.component';
-import { AdminDashboardComponent } from './admin/dashboard/dashboard.component';
-import { AdminReservationListComponent } from './admin/reservation-list/reservation-list.component';
-import { AdminPendingRequestComponent } from './admin/pending-request/pending-request.component';
-import { AdminReportComponent } from './admin/report/report.component';
-import { GuestHouseMasterComponent } from './admin/guest-house-master/guest-house-master.component';
+import { LoginComponent } from './shared/login/login.component';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+    canActivate: [AuthGuard],
+    data: { role: 'admin' }
+  },
+  {
+    path: 'user',
+    loadChildren: () => import('./user/user.module').then(m => m.UserModule),
+    canActivate: [AuthGuard],
+    data: { role: 'user' }
+  },
   { path: 'home', component: HomeComponent },
-  
-
-  { path: 'booking', component: BookingPageComponent },
-  { path: 'my-bookings', component: MybookingsComponent },
-  
-
-  { path: 'admin/dashboard', component: AdminDashboardComponent },
-  { path: 'admin/reservation-list', component: AdminReservationListComponent },
-  { path: 'admin/pending-request', component: AdminPendingRequestComponent },
-  { path: 'admin/guest-house-master', component: GuestHouseMasterComponent },
-  { path: 'admin/report', component: AdminReportComponent },
-  
- 
-  { path: '**', redirectTo: '/home' }
+  { path: '**', redirectTo: '/login' }
 ];
 
 @NgModule({

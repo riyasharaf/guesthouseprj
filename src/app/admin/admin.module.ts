@@ -1,67 +1,66 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 // Material Imports
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatStepperModule } from '@angular/material/stepper';
 
 // Components
-import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './shared/login/login.component';
+import { AdminNavComponent } from './admin-nav/admin-nav.component';
+import { AdminDashboardComponent } from './dashboard/dashboard.component';
+import { AdminReservationListComponent } from './reservation-list/reservation-list.component';
+import { AdminPendingRequestComponent } from './pending-request/pending-request.component';
+import { AdminReportComponent } from './report/report.component';
+import { GuestHouseMasterComponent } from './guest-house-master/guest-house-master.component';
 
-// Modules
-import { AppRoutingModule } from './app-routing.module';
-import { AdminModule } from './admin/admin.module';
-import { UserModule } from './user/user.module';
+// Routing
+import { AdminRoutingModule } from './admin-routing.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
-    LoginComponent
+    AdminNavComponent,
+    AdminDashboardComponent,
+    AdminReservationListComponent,
+    AdminPendingRequestComponent,
+    AdminReportComponent,
+    GuestHouseMasterComponent
   ],
   imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
+    CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule,
-    AppRoutingModule,
-    AdminModule,
-    UserModule,
+    RouterModule,
+    AdminRoutingModule,
     // Material Modules
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSnackBarModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatStepperModule,
     MatSelectModule,
     MatSlideToggleModule,
     MatChipsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatStepperModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  exports: [
+    AdminNavComponent
+  ]
 })
-export class AppModule { }
+export class AdminModule { } 

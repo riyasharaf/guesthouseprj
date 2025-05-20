@@ -1,0 +1,103 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h2>Welcome to Guest House</h2>
+      <div class="login-type-selector">
+        <button mat-button [class.active]="!isAdmin" (click)="isAdmin = false">User Login</button>
+        <button mat-button [class.active]="isAdmin" (click)="isAdmin = true">Admin Login</button>
+      </div>
+    </div>
+
+    <!-- Login Form -->
+    <form *ngIf="!showForgotPassword && !showResetPassword" [formGroup]="loginForm" (ngSubmit)="onLogin()" class="form-container">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" placeholder="Enter your email">
+        <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password" placeholder="Enter your password">
+        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+          Password is required
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
+          Password must be at least 6 characters
+        </mat-error>
+      </mat-form-field>
+
+      <div class="form-actions">
+        <span class="forgot-password" (click)="showForgotPassword = true">Forgot Password?</span>
+      </div>
+
+      <button mat-raised-button color="primary" type="submit" class="login-button" [disabled]="!loginForm.valid">
+        Login
+      </button>
+    </form>
+
+    <!-- Forgot Password Form -->
+    <form *ngIf="showForgotPassword" [formGroup]="forgotPasswordForm" (ngSubmit)="onForgotPassword()" class="form-container">
+      <h3>Reset Password</h3>
+      <p>Enter your email address and we'll send you a link to reset your password.</p>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" placeholder="Enter your email">
+        <mat-error *ngIf="forgotPasswordForm.get('email')?.hasError('required')">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="forgotPasswordForm.get('email')?.hasError('email')">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
+
+      <div class="form-actions">
+        <button mat-button type="button" (click)="showForgotPassword = false">Back to Login</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!forgotPasswordForm.valid">
+          Send Reset Link
+        </button>
+      </div>
+    </form>
+
+    <!-- Reset Password Form -->
+    <form *ngIf="showResetPassword" [formGroup]="resetPasswordForm" (ngSubmit)="onResetPassword()" class="form-container">
+      <h3>Set New Password</h3>
+      <p>Please enter your new password.</p>
+
+      <mat-form-field appearance="outline">
+        <mat-label>New Password</mat-label>
+        <input matInput formControlName="newPassword" type="password" placeholder="Enter new password">
+        <mat-error *ngIf="resetPasswordForm.get('newPassword')?.hasError('required')">
+          New password is required
+        </mat-error>
+        <mat-error *ngIf="resetPasswordForm.get('newPassword')?.hasError('minlength')">
+          Password must be at least 6 characters
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput formControlName="confirmPassword" type="password" placeholder="Confirm new password">
+        <mat-error *ngIf="resetPasswordForm.get('confirmPassword')?.hasError('required')">
+          Please confirm your password
+        </mat-error>
+        <mat-error *ngIf="resetPasswordForm.hasError('passwordMismatch')">
+          Passwords do not match
+        </mat-error>
+      </mat-form-field>
+
+      <div class="form-actions">
+        <button mat-button type="button" (click)="showResetPassword = false">Back to Login</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!resetPasswordForm.valid">
+          Reset Password
+        </button>
+      </div>
+    </form>
+  </div>
+</div> 

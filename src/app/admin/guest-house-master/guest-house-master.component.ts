@@ -29,7 +29,7 @@ export class GuestHouseMasterComponent implements OnInit {
   dataSource!: MatTableDataSource<GuestHouse>;
   searchKey: string = '';
   
-  // Arrays to hold room and bed numbers
+
   availableRooms: number[] = [];
   availableBeds: { [roomNumber: number]: number[] } = {};
   
@@ -175,7 +175,7 @@ export class GuestHouseMasterComponent implements OnInit {
 
   onSubmit() {
     if (this.guestHouseDetailsForm.valid && this.roomDetailsForm.valid && this.bedDetailsForm.valid) {
-      // Process form submission
+     
       this.showSuccessMessage('Bed created successfully!');
       this.resetForms();
       this.stepper.reset();
